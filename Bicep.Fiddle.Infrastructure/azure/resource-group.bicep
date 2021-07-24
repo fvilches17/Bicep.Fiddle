@@ -71,7 +71,7 @@ resource webAppKeyVaultRoleBasedAccess 'Microsoft.Authorization/roleAssignments@
   scope: keyVault
   properties: {
     principalId: webApp.identity.principalId
-    roleDefinitionId: '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
+    roleDefinitionId: '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/4633458b-17de-408a-b874-0445c86b69e6'
   }
   dependsOn: [
     keyVault
