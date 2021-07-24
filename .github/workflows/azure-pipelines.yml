@@ -43,6 +43,7 @@ jobs:
           inlineScript: az group create --location australiaeast --name ${{ env.AZURE_RESOURCE_GROUP_NAME }}
       
       - name: Update Azure Resource Group 💪
+        id: bicep-rg-update
         uses: Azure/cli@1.0.4
         with:
           inlineScript: |
