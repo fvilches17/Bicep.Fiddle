@@ -78,3 +78,5 @@ resource webAppKeyVaultRoleBasedAccess 'Microsoft.Authorization/roleAssignments@
     keyVault
   ]
 }
+
+output webAppName string = webApp.name

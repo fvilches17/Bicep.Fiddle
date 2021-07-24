@@ -49,3 +49,9 @@ jobs:
             az deployment group create\
               --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }}\
               --template-file 'Bicep.Fiddle.Infrastructure/azure/resource-group.bicep'
+
+      - name: Deploy Blazor App
+        uses: Azure/webapps-deploy@v2
+        with:
+          app-name: bicepfiddle-blazor-app
+          package: ${{ env.PUBLISH_FOLDER }}
