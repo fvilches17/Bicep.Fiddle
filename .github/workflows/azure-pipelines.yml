@@ -21,4 +21,12 @@ jobs:
           include-prerelease: true
 
       - name: Publish
-        run: dotnet publish Bicep.Fiddle.BlazorApp/Bicep.Fiddle.BlazorApp.csproj
+        run: |
+          dotnet publish Bicep.Fiddle.BlazorApp/Bicep.Fiddle.BlazorApp.csproj
+            --output $(Build.ArtifactStagingDirectory) 
+            --framework net6.0 
+            --runtime linux-x64 
+            --configuration release 
+            --self-contained
+        
+        
