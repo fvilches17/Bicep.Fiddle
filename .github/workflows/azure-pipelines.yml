@@ -35,9 +35,14 @@ jobs:
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-          
-      - name: Azure CLI Action
+      
+      - name: Enzure Azure Resource Group
+        uses: Azure/cli@1.0.4
+        with:
+          inlineScript: az group create --location australiaeast --name "bicep-fiddle-rg"
+      
+      - name: Install Bicep
         uses: Azure/cli@1.0.4
         with:
           inlineScript: az bicep install
-
+          
