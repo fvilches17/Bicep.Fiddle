@@ -42,7 +42,7 @@ jobs:
         with:
           inlineScript: az group create --location australiaeast --name ${{ env.AZURE_RESOURCE_GROUP_NAME }}
       
-      - name: Update Azure Resource Group
+      - name: Update Azure Resource Group 💪
         uses: Azure/cli@1.0.4
         with:
           inlineScript: |

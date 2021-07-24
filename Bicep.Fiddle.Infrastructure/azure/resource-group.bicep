@@ -63,7 +63,7 @@ resource keyVaultSecrets 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' 
 }
 
 var keyVaultSecretUserRoleId = '4633458b-17de-408a-b874-0445c86b69e6'
-resource webAppKeyVaultRoleBasedAccess 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
+resource webAppKeyVaultRoleBasedAccess 'Microsoft.Authorization/roleAssignments@2021-04-01-preview' = {
   name: 'webAppKvAccess'
   scope: keyVault
   properties: {
@@ -74,3 +74,4 @@ resource webAppKeyVaultRoleBasedAccess 'Microsoft.Authorization/roleAssignments@
     keyVault
   ]
 }
+
