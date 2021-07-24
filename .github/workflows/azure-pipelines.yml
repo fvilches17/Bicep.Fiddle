@@ -43,7 +43,7 @@ jobs:
           inlineScript: az group create --location australiaeast --name ${{ env.AZURE_RESOURCE_GROUP_NAME }}
       
       - name: Update Azure Resource Group 💪
-        id: bicep-rg-update
+        id: beegee
         uses: Azure/cli@1.0.4
         with:
           inlineScript: |
@@ -52,7 +52,7 @@ jobs:
               --template-file 'Bicep.Fiddle.Infrastructure/azure/resource-group.bicep'
 
       - name: Echo outputs
-        run: echo ${{ steps.bicep-rg-update.outputs.webAppName.value }}
+        run: echo ${{ steps.beegee.outputs.webAppName }}
 
       - name: Deploy Blazor App 🚀
         uses: Azure/webapps-deploy@v2
