@@ -1,6 +1,9 @@
 @description('Azure Resource Group Location')
 param location string = resourceGroup().location
 
+@description('A new GUID used to identify the role assignment')
+param roleNameGuid string = newGuid()
+
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-01-15' = {
   name: 'bicepfiddle-asp'
   location: location
@@ -63,14 +66,14 @@ resource keyVaultSecrets 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' 
   }
 }
 
-// resource webAppKeyVaultRoleBasedAccess 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
-//   name: '9311cb4a-2f20-49a2-af4a-aba81f1097fc'
-//   scope: keyVault
-//   properties: {
-//     principalId: webApp.identity.principalId
-//     roleDefinitionId: 'Key Vault Secrets User'
-//   }
-//   dependsOn: [
-//     keyVault
-//   ]
-// }
+resource webAppKeyVaultRoleBasedAccess 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+  name: roleNameGuid
+  scope: keyVault
+  properties: {
+    principalId: webApp.identity.principalId
+    roleDefinitionId: '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
+  }
+  dependsOn: [
+    keyVault
+  ]
+}
