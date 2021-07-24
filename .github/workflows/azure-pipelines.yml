@@ -38,7 +38,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       
       - name: Ensure Azure Resource Group Created
-        uses: Azure/cli@1.04
+        uses: Azure/cli@1.0.4
         with:
           inlineScript: az group create --location australiaeast --name ${{ env.AZURE_RESOURCE_GROUP_NAME }}
       
