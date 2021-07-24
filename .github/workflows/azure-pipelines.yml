@@ -10,6 +10,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      PUBLISH_FOLDER: './publish'
     steps:
       - name: Chekout
         uses: actions/checkout@v2
@@ -22,5 +24,9 @@ jobs:
 
       - name: Publish
         run: |
-          "dotnet publish 'Bicep.Fiddle.BlazorApp/Bicep.Fiddle.BlazorApp.csproj'
-            --configuration release"
+          dotnet publish 'Bicep.Fiddle.BlazorApp/Bicep.Fiddle.BlazorApp.csproj'\
+            --output ${{ env.PUBLISH_FOLDER }}\
+            --framework net6.0\
+            --runtime linux-x64\ 
+            --configuration release\
+            --self-contained
