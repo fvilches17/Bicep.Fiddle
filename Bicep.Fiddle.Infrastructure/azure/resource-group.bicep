@@ -63,15 +63,14 @@ resource keyVaultSecrets 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' 
   }
 }
 
-resource webAppKeyVaultRoleBasedAccess 'Microsoft.Authorization/roleAssignments@2021-04-01-preview' = {
-  name: '9311cb4a-2f20-49a2-af4a-aba81f1097fc'
-  scope: keyVault
-  properties: {
-    principalId: webApp.identity.principalId
-    roleDefinitionId: 'Key Vault Secrets User'
-  }
-  dependsOn: [
-    keyVault
-  ]
-}
-
+// resource webAppKeyVaultRoleBasedAccess 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
+//   name: '9311cb4a-2f20-49a2-af4a-aba81f1097fc'
+//   scope: keyVault
+//   properties: {
+//     principalId: webApp.identity.principalId
+//     roleDefinitionId: 'Key Vault Secrets User'
+//   }
+//   dependsOn: [
+//     keyVault
+//   ]
+// }
