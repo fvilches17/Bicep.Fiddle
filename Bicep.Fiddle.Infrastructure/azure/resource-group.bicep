@@ -1,3 +1,4 @@
+@description('Azure Resource Group Location')
 param location string = resourceGroup().location
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-01-15' = {
@@ -62,13 +63,12 @@ resource keyVaultSecrets 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' 
   }
 }
 
-var keyVaultSecretUserRoleId = '4633458b-17de-408a-b874-0445c86b69e6'
 resource webAppKeyVaultRoleBasedAccess 'Microsoft.Authorization/roleAssignments@2021-04-01-preview' = {
-  name: keyVaultSecretUserRoleId
+  name: '9311cb4a-2f20-49a2-af4a-aba81f1097fc'
   scope: keyVault
   properties: {
     principalId: webApp.identity.principalId
-    roleDefinitionId: keyVaultSecretUserRoleId
+    roleDefinitionId: 'Key Vault Secrets User'
   }
   dependsOn: [
     keyVault
