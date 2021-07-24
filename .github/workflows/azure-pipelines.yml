@@ -51,7 +51,7 @@ jobs:
               --template-file 'Bicep.Fiddle.Infrastructure/azure/resource-group.bicep'
 
       - name: Echo outputs
-        run: echo${{ steps.bicep-rg-update.outputs }}
+        run: echo ${{ steps.bicep-rg-update.outputs }}
       
       - name: Deploy Blazor App 🚀
         uses: Azure/webapps-deploy@v2
