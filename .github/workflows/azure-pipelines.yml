@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PUBLISH_FOLDER: './publish'
+      AZURE_RESOURCE_GROUP_NAME: 'bicepfiddle-rg' 
     steps:
       - name: Chekout
         uses: actions/checkout@v2
@@ -36,7 +37,15 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       
+      - name: Ensure Azure Resource Group Created
+        uses: Azure/cli@1.04
+        with:
+          inlineScript: az group create --location australiaeast --name ${{ env.AZURE_RESOURCE_GROUP_NAME }}
+      
       - name: Update Azure Resource Group
         uses: Azure/cli@1.0.4
         with:
-          inlineScript: az deployment group create --resource-group 'bicepfiddle-rg' --template-file 'Bicep.Fiddle.Infrastructure/azure/resource-group.bicep'
+          inlineScript: |
+            az deployment group create\
+              --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }}\
+              --template-file 'Bicep.Fiddle.Infrastructure/azure/resource-group.bicep'
