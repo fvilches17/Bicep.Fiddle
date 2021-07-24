@@ -55,9 +55,22 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-04-01-preview' = {
 }
 
 resource keyVaultSecrets 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' = {
-  name: '/foo'
+  name: '${keyVault.name}/foo'
   properties: {
     value: 'bar'
     contentType: 'string'
   }
+}
+
+var keyVaultSecretUserRoleId = '4633458b-17de-408a-b874-0445c86b69e6'
+resource webAppKeyVaultRoleBasedAccess 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
+  name: 'webAppKvAccess'
+  scope: keyVault
+  properties: {
+    principalId: webApp.identity.principalId
+    roleDefinitionId: '/subscriptions/${subscription().id}/providers/Microsoft.Authorization/roleDefinitions/${keyVaultSecretUserRoleId}'
+  }
+  dependsOn: [
+    keyVault
+  ]
 }
