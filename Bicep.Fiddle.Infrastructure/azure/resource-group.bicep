@@ -52,8 +52,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-04-01-preview' = {
     }
     accessPolicies: [
       {
-        tenantId: webApp.identity.tenantId
-        applicationId: webApp.id
+        tenantId: subscription().tenantId
         objectId: webApp.identity.principalId
         permissions: {
           keys: [
