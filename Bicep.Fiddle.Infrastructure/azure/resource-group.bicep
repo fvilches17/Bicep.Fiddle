@@ -51,16 +51,13 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-04-01-preview' = {
       name: 'standard'
       family: 'A'
     }
-    accessPolicies: [
-      {
-        tenantId: subscription().tenantId
-        objectId: webApp.identity.principalId
-        permissions: {
-          secrets: [
-            'get'
-          ]
-        }
-      }
-    ]
+  }
+}
+
+resource keyVaultSecrets 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' = {
+  name: '/foo'
+  properties: {
+    value: 'bar'
+    contentType: 'string'
   }
 }
