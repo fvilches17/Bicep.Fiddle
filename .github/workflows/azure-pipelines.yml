@@ -25,7 +25,7 @@ jobs:
       - name: Publish
         run: |
           'dotnet publish Bicep.Fiddle.BlazorApp/Bicep.Fiddle.BlazorApp.csproj
-            --output ${{ env.PUBLISH_FOLDER }}
+            --output '${{ env.PUBLISH_FOLDER }}'
             --framework net6.0 
             --runtime linux-x64 
             --configuration release 
