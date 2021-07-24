@@ -46,6 +46,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-04-01-preview' = {
   location: location
   properties: {
     tenantId: subscription().tenantId
+    enableRbacAuthorization: true
     sku: {
       name: 'standard'
       family: 'A'
@@ -55,7 +56,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-04-01-preview' = {
         tenantId: subscription().tenantId
         objectId: webApp.identity.principalId
         permissions: {
-          keys: [
+          secrets: [
             'get'
           ]
         }
