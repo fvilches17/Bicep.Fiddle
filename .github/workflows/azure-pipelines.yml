@@ -11,7 +11,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      PUBLISH_FOLDER: './publish'
+      PUBLISH_FOLDER: './publish/'
     steps:
       - name: Chekout
         uses: actions/checkout@v2
