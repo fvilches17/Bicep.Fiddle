@@ -22,4 +22,5 @@ jobs:
 
       - name: Publish
         run: |
-          dotnet publish 'Bicep.Fiddle.BlazorApp/Bicep.Fiddle.BlazorApp.csproj'
+          "dotnet publish 'Bicep.Fiddle.BlazorApp/Bicep.Fiddle.BlazorApp.csproj'
+            --configuration release"
