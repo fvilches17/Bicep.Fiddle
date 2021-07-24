@@ -32,27 +32,16 @@ jobs:
             --configuration release\
             --self-contained
             
-      - name: Azure Login 🔑
+      - name: Azure Login
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       
-      # - name: Ensure Azure Resource Group Created
-      #   uses: Azure/cli@1.0.4
-      #   with:
-      #     inlineScript: az group create --location australiaeast --name ${{ env.AZURE_RESOURCE_GROUP_NAME }}
-      
-      - uses: Azure/cli@1.0.4
+      - name: Ensure Azure Resource Group Created
+        uses: Azure/cli@1.0.4
         with:
-          inlineScript: |
-            #!/bin/bash
-            if $(az group exists --name ${{ env.AZURE_RESOURCE_GROUP_NAME }}) ; then
-              echo "Azure resource group already exists, skipping creation..."
-            else
-              az group create --name ${{ env.AZURE_RESOURCE_GROUP_NAME }} --location australiaeast
-              echo "Azure resource group created"
-            fi
-
+          inlineScript: az group create --location australiaeast --name ${{ env.AZURE_RESOURCE_GROUP_NAME }}
+      
       - name: Update Azure Resource Group 💪
         uses: Azure/cli@1.0.4
         with:
