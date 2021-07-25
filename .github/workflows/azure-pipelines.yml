@@ -14,13 +14,6 @@ jobs:
       PUBLISH_FOLDER: './publish'
       AZURE_RESOURCE_GROUP_NAME: 'bicepfiddle-rg' 
     steps:
-      - name: Print gh variables
-        run: |
-          echo ${{ github.run_id }}
-          echo ${{ github.run_number }}
-          echo ${{ github.github.action }}
-          
-    
       - name: Chekout
         uses: actions/checkout@v2
       
@@ -62,7 +55,7 @@ jobs:
         uses: Azure/cli@1.0.4
         with:
           inlineScript: |
-            echo "WEB_APP_NAME = az deployment group show\
+            echo "WEBAPP_NAME = az deployment group show\
               --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }}\
               --name ${{ github.run_number }}\
               --query properties.outputs.webAppName.value" >> $GITHUB_ENV
@@ -70,5 +63,5 @@ jobs:
       - name: Deploy Blazor App 🚀
         uses: Azure/webapps-deploy@v2
         with:
-          app-name: ${{ steps.bicep-rg-update.outputs.webAppName }}
+          app-name: ${{ env.WEBAPP_NAME }}
           package: ${{ env.PUBLISH_FOLDER }}
