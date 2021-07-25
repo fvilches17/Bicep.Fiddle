@@ -43,21 +43,22 @@ jobs:
           inlineScript: az group create --location australiaeast --name ${{ env.AZURE_RESOURCE_GROUP_NAME }}
       
       - name: Update Azure Resource Group 💪
-        id: beegee
         uses: Azure/cli@1.0.4
         with:
           inlineScript: |
             az deployment group create\
               --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }}\
-              --template-file 'Bicep.Fiddle.Infrastructure/azure/resource-group.bicep'
-
-      - name: Echo outputs
-        run: echo ${{ steps.beegee.outputs }}
+              --template-file 'Bicep.Fiddle.Infrastructure/azure/resource-group.bicep'\
+              --name ${{ env.GITHUB_RUN_NUMBER }}
         
-      - name: output with jq
-        run: |
-          sudo apt-get install jq
-          ${{ steps.beegee.outputs }} | jq '.'
+      - name: Update Azure Resource Group 💪
+        uses: Azure/cli@1.0.4
+        with:
+          inlineScript: |
+            az deployment group show\
+              --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }}\
+              --name ${{ env.GITHUB_RUN_NUMBER }}\
+              --query properties.outputs.webAppName.value
 
       - name: Deploy Blazor App 🚀
         uses: Azure/webapps-deploy@v2
