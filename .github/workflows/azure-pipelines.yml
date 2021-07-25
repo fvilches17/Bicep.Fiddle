@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PUBLISH_FOLDER: './publish'
-      AZURE_RESOURCE_GROUP_NAME: 'bicepfiddle-rg' 
+      AZURE_RESOURCE_GROUP_NAME: 'rg-bicepfiddle-development' 
     steps:
       - name: Chekout
         uses: actions/checkout@v2
@@ -48,8 +48,9 @@ jobs:
           inlineScript: |
             az deployment group create\
               --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }}\
+              --name ${{ github.run_number }}\
               --template-file 'Bicep.Fiddle.Infrastructure/azure/resource-group.bicep'\
-              --name ${{ github.run_number }}
+              --parameters environment=Development
         
       - name: Set WEBAPP_NAME Env Variable
         uses: Azure/cli@1.0.4

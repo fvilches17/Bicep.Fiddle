@@ -1,8 +1,13 @@
 @description('Azure Resource Group Location')
 param location string = resourceGroup().location
 
+@allowed([
+  'Development'
+])
+param environment string
+
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-01-15' = {
-  name: 'bicepfiddle-asp'
+  name: 'plan-bicepfiddle-${environment}'
   location: location
   kind: 'linux'
   sku: {
@@ -12,7 +17,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-01-15' = {
 }
 
 resource webApp 'Microsoft.Web/sites@2021-01-15' = {
-  name: 'bicepfiddle-blazor-app'
+  name: 'app-bicepfiddle-${environment}'
   location: location
   identity: {
     type: 'SystemAssigned'
@@ -43,7 +48,7 @@ resource webApp 'Microsoft.Web/sites@2021-01-15' = {
 }
 
 resource keyVault 'Microsoft.KeyVault/vaults@2021-04-01-preview' = {
-  name: 'bicepfiddle-kv'
+  name: 'kv-bicepfiddle-${environment}'
   location: location
   properties: {
     tenantId: subscription().tenantId
