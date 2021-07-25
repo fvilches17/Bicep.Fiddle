@@ -53,6 +53,17 @@ jobs:
 
       - name: Echo outputs
         run: echo ${{ steps.beegee.outputs }}
+        
+      - name: JQ Script
+        uses: edwardgeorge/jq-action@v1
+        with:
+          input: ${{ steps.beegee.outputs }}
+          script: '.'
+          
+      - name: output with jq
+        run: |
+          sudo apt-get install jq
+          ${{ steps.beegee.outputs }} | jq '.'
 
       - name: Deploy Blazor App 🚀
         uses: Azure/webapps-deploy@v2
