@@ -58,10 +58,11 @@ jobs:
             echo WEBAPP_NAME=$(az deployment group show\
               --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }}\
               --name ${{ github.run_number }}\
-              --query properties.outputs.webAppName.value) >> $GITHUB_ENV
+              --query properties.outputs.webAppName.value\
+              --out tsv) >> $GITHUB_ENV
 
       - name: Deploy Blazor App 🚀
         uses: Azure/webapps-deploy@v2
         with:
-          app-name: bicepfiddle-blazor-app
+          app-name: ${{ env.WEBAPP_NAME }}
           package: ${{ env.PUBLISH_FOLDER }}
