@@ -50,7 +50,10 @@ jobs:
               --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }}\
               --name ${{ github.run_number }}\
               --template-file 'Bicep.Fiddle.Infrastructure/azure/resource-group.bicep'\
-              --parameters environment=Development
+              --parameters aspnetcore_environment=Development\
+              --parameters appServicePlanName=plan-bicepfiddle-development\
+              --parameters webAppName=app-bicepfiddle-development\
+              --parameters keyVaultName=kv-bicepfiddle-dev
         
       - name: Set WEBAPP_NAME Env Variable
         uses: Azure/cli@1.0.4

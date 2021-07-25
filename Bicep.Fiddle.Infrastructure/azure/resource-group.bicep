@@ -4,10 +4,13 @@ param location string = resourceGroup().location
 @allowed([
   'Development'
 ])
-param environment string
+param aspnetcore_environment string
+param appServicePlanName string
+param webAppName string
+param keyVaultName string
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-01-15' = {
-  name: 'plan-bicepfiddle-${environment}'
+  name: appServicePlanName
   location: location
   kind: 'linux'
   sku: {
@@ -17,7 +20,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-01-15' = {
 }
 
 resource webApp 'Microsoft.Web/sites@2021-01-15' = {
-  name: 'app-bicepfiddle-${environment}'
+  name: webAppName
   location: location
   identity: {
     type: 'SystemAssigned'
@@ -32,7 +35,7 @@ resource webApp 'Microsoft.Web/sites@2021-01-15' = {
       appSettings: [
         {
           name: 'ASPNETCORE_ENVIRONMENT'
-          value: 'Production'
+          value: aspnetcore_environment
         }
         {
           name: 'ASPNETCORE_HTTPS_PORT'
@@ -48,7 +51,7 @@ resource webApp 'Microsoft.Web/sites@2021-01-15' = {
 }
 
 resource keyVault 'Microsoft.KeyVault/vaults@2021-04-01-preview' = {
-  name: 'kv-bicepfiddle-${environment}'
+  name: keyVaultName
   location: location
   properties: {
     tenantId: subscription().tenantId
@@ -68,17 +71,15 @@ resource keyVaultSecrets 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' 
   }
 }
 
-var KeyVaultsSecretUserRole = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/4633458b-17de-408a-b874-0445c86b69e6'
+var kvSecretUserRole = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/4633458b-17de-408a-b874-0445c86b69e6'
 resource webAppKeyVaultRoleBasedAccess 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  name: '4a460d85-2fd0-40a1-839c-582ea160fe9a' //Random unique id
+  name: '4a460d85-2fd0-40a1-839c-582ea160fe9a' // Random unique id
   scope: keyVault
   properties: {
     principalId: webApp.identity.principalId
-    roleDefinitionId: KeyVaultsSecretUserRole
+    roleDefinitionId: kvSecretUserRole
   }
   dependsOn: [
     keyVault
   ]
 }
-
-output webAppName string = webApp.name
