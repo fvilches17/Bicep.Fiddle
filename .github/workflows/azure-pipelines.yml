@@ -55,10 +55,10 @@ jobs:
         uses: Azure/cli@1.0.4
         with:
           inlineScript: |
-            echo "WEBAPP_NAME = az deployment group show\
+            echo "WEBAPP_NAME=$(az deployment group show\
               --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }}\
               --name ${{ github.run_number }}\
-              --query properties.outputs.webAppName.value" >> $GITHUB_ENV
+              --query properties.outputs.webAppName.value)" >> $GITHUB_ENV
 
       - name: Deploy Blazor App 🚀
         uses: Azure/webapps-deploy@v2
