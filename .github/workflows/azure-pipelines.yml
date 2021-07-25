@@ -2,7 +2,7 @@ name: CI CD
 
 on:
   push:
-    branches: [ main, feature/add-pipeline ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -51,7 +51,7 @@ jobs:
               --template-file 'Bicep.Fiddle.Infrastructure/azure/resource-group.bicep'\
               --name ${{ github.run_number }}
         
-      - name: Set WebAppName Env Variable
+      - name: Set WEBAPP_NAME Env Variable
         uses: Azure/cli@1.0.4
         with:
           inlineScript: |
