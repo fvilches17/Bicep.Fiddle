@@ -45,6 +45,10 @@ resource webApp 'Microsoft.Web/sites@2021-01-15' = {
           name: 'TZ'
           value: 'Pacific/Auckland'
         }
+        {
+          name: 'KeyVaultName'
+          value: keyVaultName
+        }
       ]
     }
   }
