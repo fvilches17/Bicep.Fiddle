@@ -12,7 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PUBLISH_FOLDER: './publish'
-      AZURE_RESOURCE_GROUP_NAME: 'rg-bicepfiddle-development' 
+      AZURE_RESOURCE_GROUP_NAME: 'rg-bicepfiddle-development'
+      ASPNETCORE_ENVIRONMENT: 'Development'
+      APPSERVICEPLAN_NAME: 'plan-bicepfiddle-development'
+      WEBAPP_NAME: 'app-bicepfiddle-development'
+      KEYVAULT_NAME: 'kv-bicepfiddle-dev'
     steps:
       - name: Chekout
         uses: actions/checkout@v2
@@ -50,21 +54,11 @@ jobs:
               --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }}\
               --name ${{ github.run_number }}\
               --template-file 'Bicep.Fiddle.Infrastructure/azure/resource-group.bicep'\
-              --parameters aspnetcore_environment=Development\
-              --parameters appServicePlanName=plan-bicepfiddle-development\
-              --parameters webAppName=app-bicepfiddle-development\
-              --parameters keyVaultName=kv-bicepfiddle-dev
+              --parameters aspnetcore_environment=${{ env.ASPNETCORE_ENVIRONMENT }}\
+              --parameters appServicePlanName=${{ env.APPSERVICEPLAN_NAME }}\
+              --parameters webAppName=${{ env.WEBAPP_NAME }}\
+              --parameters keyVaultName=${{ env.KEYVAULT_NAME }}
         
-      - name: Set WEBAPP_NAME Env Variable
-        uses: Azure/cli@1.0.4
-        with:
-          inlineScript: |
-            echo WEBAPP_NAME=$(az deployment group show\
-              --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }}\
-              --name ${{ github.run_number }}\
-              --query properties.outputs.webAppName.value\
-              --out tsv) >> $GITHUB_ENV
-
       - name: Deploy Blazor App 🚀
         uses: Azure/webapps-deploy@v2
         with:
