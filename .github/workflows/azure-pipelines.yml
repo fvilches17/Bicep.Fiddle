@@ -23,7 +23,7 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: true
 
-      - name: Publish
+      - name: Publish Blazor App
         run: |
           dotnet publish 'Bicep.Fiddle.BlazorApp/Bicep.Fiddle.BlazorApp.csproj'\
             --output ${{ env.PUBLISH_FOLDER }}\
@@ -63,5 +63,5 @@ jobs:
       - name: Deploy Blazor App 🚀
         uses: Azure/webapps-deploy@v2
         with:
-          app-name: ${{ env.WEBAPP_NAME }}
+          app-name: bicepfiddle-blazor-app
           package: ${{ env.PUBLISH_FOLDER }}
