@@ -43,7 +43,7 @@ resource webApp 'Microsoft.Web/sites@2021-01-15' = {
 }
 
 resource keyVault 'Microsoft.KeyVault/vaults@2021-04-01-preview' = {
-  name: 'bicepfiddle-prod-kv'
+  name: 'bicepfiddle-kv'
   location: location
   properties: {
     tenantId: subscription().tenantId
