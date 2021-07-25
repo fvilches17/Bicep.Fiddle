@@ -51,14 +51,6 @@ jobs:
               --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }}\
               --template-file 'Bicep.Fiddle.Infrastructure/azure/resource-group.bicep'
 
-      - name: Azure PowerShell Action
-        uses: Azure/powershell@v1
-        with:
-          # Specify the Az PowerShell script here.
-          inlineScript: type ${{ steps.beegee.outputs }}
-          # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
-          azPSVersion: latest
-      
       - name: Echo outputs
         run: echo ${{ steps.beegee.outputs }}
 
