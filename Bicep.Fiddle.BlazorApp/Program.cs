@@ -21,11 +21,11 @@ namespace Bicep.Fiddle.BlazorApp
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                //.ConfigureAppConfiguration((_, configBuilder) =>
-                //{
-                //    var config = configBuilder.Build();
-                //    AddAzureKeyVault(config, configBuilder);
-                //})
+                .ConfigureAppConfiguration((_, configBuilder) =>
+                {
+                    var config = configBuilder.Build();
+                    AddAzureKeyVault(config, configBuilder);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
